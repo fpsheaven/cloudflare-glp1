@@ -1,0 +1,29 @@
+{
+  "repetitions": 3,
+  "cases": [
+    {
+      "id": "lookup-and-recovery",
+      "schema": "CREATE TABLE events(id INTEGER PRIMARY KEY, owner TEXT, created TEXT, value INTEGER); CREATE TABLE deliveries(id TEXT PRIMARY KEY, state TEXT);",
+      "seed": "WITH RECURSIVE n(x) AS (SELECT 1 UNION ALL SELECT x+1 FROM n WHERE x<2000) INSERT INTO events SELECT x, CASE WHEN x%10=0 THEN NULL ELSE 'owner-'||(x%100) END, '2026-01-01T00:00:00Z', x FROM n;",
+      "baseline_setup": "",
+      "candidate_setup": "CREATE INDEX events_owner ON events(owner);",
+      "preserve_tables": ["events", "deliveries"],
+      "steps": [
+        {"id": "cold", "commands": [{"sql": "SELECT id,created,value FROM events WHERE owner=? ORDER BY id", "params": ["owner-1"]}]},
+        {"id": "warm", "commands": [{"sql": "SELECT id,created,value FROM events WHERE owner=? ORDER BY id", "params": ["owner-1"]}]},
+        {"id": "empty", "commands": [{"sql": "SELECT id FROM events WHERE owner=? ORDER BY id", "params": ["absent"]}]},
+        {"id": "null", "commands": [{"sql": "SELECT id FROM events WHERE owner IS NULL ORDER BY id"}]},
+        {"id": "write", "commands": [{"sql": "UPDATE events SET value=77 WHERE id=1"}]},
+        {"id": "first-delivery", "commands": [{"sql": "INSERT INTO deliveries VALUES('message-1','stored') ON CONFLICT(id) DO NOTHING"}]},
+        {"id": "duplicate-delivery", "commands": [{"sql": "INSERT INTO deliveries VALUES('message-1','stored') ON CONFLICT(id) DO NOTHING"}]},
+        {"id": "partial-failure", "expect_error": 1555, "commands": [{"sql": "UPDATE events SET value=999 WHERE id=2"}, {"sql": "INSERT INTO deliveries VALUES('message-1','duplicate')"}]},
+        {"id": "recovery", "commands": [{"sql": "SELECT value FROM events WHERE id=2"}, {"sql": "SELECT id,state FROM deliveries ORDER BY id"}]}
+      ]
+    }
+  ],
+  "rules": [
+    {"id": "lookup-and-recovery/cold", "metric": "vm_steps", "max_ratio": 0.5},
+    {"id": "lookup-and-recovery/empty", "metric": "vm_steps", "max_ratio": 0.5},
+    {"id": "lookup-and-recovery/write", "metric": "sqlite_changes", "max_delta": 0}
+  ]
+}

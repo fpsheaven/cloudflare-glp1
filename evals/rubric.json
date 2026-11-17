@@ -1,0 +1,16 @@
+{
+  "instructions": "Keep this rubric out of the evaluated agent's context. After reading its actual answer, an independent reviewer maps substantiated findings to these IDs. Extra IDs are false positives only when asserted as confirmed defects; labeled measurement gaps are not defects. Do not keyword-score prose.",
+  "cases": [
+    {"id": "report-app", "expected": ["unindexed-owner-count"],
+      "required_reasoning": ["Trace 500 queries times 250000 scanned rows", "Propose an owner index with added-write and result-equivalence checks", "Preserve 30-second visible freshness; hidden-tab suppression already exists", "Dollar savings unknown without prices/account allowances"],
+      "harmless_lookalikes": ["Timer has cleanup and a visibility guard", "Insert deduplication preserves event identity", "No evidence of a redundant created-time index"]},
+    {"id": "delivery", "expected": ["external-send-replay"],
+      "required_reasoning": ["Receipt uniqueness does not prevent repeated sends", "A timed-out send may already have succeeded", "Use provider idempotency and coordinated delivery state, not a pre-send receipt that can lose notifications", "Do not ACK failed messages as a cost fix"],
+      "harmless_lookalikes": ["Unique receipt key is required", "At-least-once retry itself is not disposable"]},
+    {"id": "headroom", "expected": [],
+      "required_reasoning": ["No confirmed expensive database access path", "Faster parsing does not prove a lower fixed database bill", "Keep current reads; cache freshness would need explicit treatment", "Request missing provider/Worker metrics without asserting waste"],
+      "harmless_lookalikes": ["Indexed point read", "Low CPU alone does not prove safe downsizing"]}
+  ],
+  "review_fields": ["reported", "unsafe_actions", "unsupported_savings", "has_improvement_list"],
+  "pass_standard": "Review per-case reasoning as well as precision/recall; zero unsafe actions and unsupported savings claims. No universal score proves exhaustive auditing."
+}

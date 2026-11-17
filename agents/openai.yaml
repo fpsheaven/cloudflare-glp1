@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cloudflare GLP1"
+  short_description: "Audit the whole project and explain Cloudflare savings"
+  default_prompt: "Use $cloudflare-glp1 to review my whole project against current official docs, find cost and scaling gaps across all services, and finish with a prioritized plain-language improvement list that explains savings, data impact and evidence gaps."

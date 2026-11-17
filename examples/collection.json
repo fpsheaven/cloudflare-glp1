@@ -1,0 +1,7 @@
+{
+  "account_id": "00000000000000000000000000000000",
+  "start_date": "2026-01-01",
+  "end_date_exclusive": "2026-01-03",
+  "database_ids": ["00000000-0000-0000-0000-000000000000"],
+  "workers": ["synthetic-worker"]
+}

@@ -1,0 +1,9 @@
+{
+  "synthetic": true,
+  "batch": ["one", "two", "three"],
+  "attempts": [
+    {"attempt": 1, "accepted_sends": ["one", "two"], "receipt_ids": ["one", "two"], "failure": "send three timed out; acceptance unknown"},
+    {"attempt": 2, "accepted_sends": ["one", "two", "three"], "receipt_ids": ["one", "two", "three"], "failure": null}
+  ],
+  "requirements": "Deliver every notification; preserve receipt identity. Do not silently drop failed messages."
+}

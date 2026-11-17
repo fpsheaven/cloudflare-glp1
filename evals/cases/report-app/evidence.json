@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "period": "one completed UTC day",
+  "database_rows": 250000,
+  "query": "SELECT COUNT(*) AS n FROM events WHERE owner = ?",
+  "query_calls": 500,
+  "query_rows_read": 125000000,
+  "database_rows_read": 126000000,
+  "database_rows_written": 1500,
+  "representative_plan": "SCAN events",
+  "median_matching_rows": 3,
+  "required_behavior": "Visible client counters may be at most 30 seconds stale. Preserve all events and timestamps.",
+  "prices_and_allowances": null,
+  "other_product_costs": null
+}

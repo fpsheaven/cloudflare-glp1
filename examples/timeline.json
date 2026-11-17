@@ -1,0 +1,12 @@
+{
+  "window_hours": 24,
+  "metrics": ["rows_read", "rows_written"],
+  "events": [
+    {"id": "release", "at": "2026-01-02T00:00:00Z", "kind": "deployment"},
+    {"id": "traffic-shift", "at": "2026-01-02T01:00:00Z", "kind": "client rollout"}
+  ],
+  "buckets": [
+    {"start": "2026-01-01T00:00:00Z", "end": "2026-01-02T00:00:00Z", "successful_actions": 100, "errors": 0, "units": {"rows_read": 10000, "rows_written": 100}},
+    {"start": "2026-01-02T00:00:00Z", "end": "2026-01-03T00:00:00Z", "successful_actions": 50, "errors": 50, "units": {"rows_read": 5000, "rows_written": 100}}
+  ]
+}

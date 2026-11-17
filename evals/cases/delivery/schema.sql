@@ -1,0 +1,1 @@
+CREATE TABLE receipts(id TEXT PRIMARY KEY);

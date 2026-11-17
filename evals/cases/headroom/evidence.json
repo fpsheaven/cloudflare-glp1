@@ -1,0 +1,12 @@
+{
+  "synthetic": true,
+  "engine": "managed PostgreSQL",
+  "billing": {"provisioned_database_monthly_usd": 200, "size_changed": false, "per_row_read_fee": null},
+  "query_plan": "Index Scan using accounts_pkey",
+  "query_p95_ms": 2,
+  "database_peak_cpu_percent": 20,
+  "verified_retries_per_action": 0,
+  "changes": "A local serialization prototype halves application parsing time; production instance size is unchanged.",
+  "missing": ["Worker CPU billing", "database resizing feasibility", "other invoice products"],
+  "required_behavior": "Always return the current display name."
+}

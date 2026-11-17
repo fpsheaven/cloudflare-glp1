@@ -1,0 +1,19 @@
+{
+  "currency": "USD",
+  "period": "synthetic complete month; example prices, not Cloudflare tariffs",
+  "fixed_cost": {"baseline": 5, "candidate": 5},
+  "migration_cost": 2,
+  "meters": [
+    {"id": "reads", "pricing": "linear", "allowance": 1000, "price_unit_size": 1000, "price": 1, "other_account_units": 500,
+      "baseline": [{"units": 2000, "drivers": {"users": 1, "history": 1}}, {"units": 100, "drivers": {}}],
+      "candidate": [{"units": 200, "drivers": {"users": 1}}, {"units": 100, "drivers": {}}]},
+    {"id": "writes", "pricing": "linear", "allowance": 0, "price_unit_size": 1000, "price": 2, "other_account_units": 0,
+      "baseline": [{"units": 100, "drivers": {"users": 1}}],
+      "candidate": [{"units": 120, "drivers": {"users": 1}}]}
+  ],
+  "scenarios": [
+    {"id": "current", "factors": {"users": 1, "history": 1}},
+    {"id": "10x", "factors": {"users": 10, "history": 2}},
+    {"id": "100x", "factors": {"users": 100, "history": 10}}
+  ]
+}
