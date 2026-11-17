@@ -1,4 +1,5 @@
 # Cloudflare GLP1
+<img width="1152" height="1728" alt="image" src="https://github.com/user-attachments/assets/516175fa-c735-4dee-a38f-edba0a03672f" />
 
 An AI agent skill that finds unnecessary Cloudflare spending, traces it to your code, and recommends practical changes without silently sacrificing data or application behavior.
 
